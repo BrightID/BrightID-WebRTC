@@ -1,4 +1,8 @@
-const { db } = require('./db');
+const {
+  db,
+  persons: { ALPHA, ZETA },
+  types: { ICE_CANDIDATE, ANSWER, OFFER },
+} = require('./db');
 
 function entries(req, res) {
   const dbEntries = [];
@@ -13,22 +17,39 @@ function entries(req, res) {
 }
 
 function update(req, res) {
-  const { id, iceCandidtate, offer, answer } = req.body;
+  const { rtcId, person, type, value } = req.body;
 
-  const dispatcher = db.get(id);
+  const dispatcher = db.get(rtcId);
 
-  if (!dispatcher) {
+  const verifyPerson = person === ALPHA || person === ZETA;
+
+  const verifyType =
+    type === ICE_CANDIDATE || type === ANSWER || type === OFFER;
+
+  if (verifyPerson && verifyType) {
+    dispatcher[person][type] = value;
     res.json({
-      msg: 'no matching id',
-      error: 'no matching id',
+      msg: 'updated dispatcher successfully',
+      dispatcher,
     });
   } else {
     res.json({
-      msg: '${}',
+      msg: 'error',
+      error: 'wrong person or type - cannot update dispatcher',
     });
   }
 
-  console.log(dbEntries);
+  console.log(dispatcher);
 }
 
-module.exports = { entries };
+function retrieveDispatcher(req, res) {
+  const { rtcId } = req.body;
+  const dispatcher = db.get(rtcId);
+  if (dispatcher) {
+    res.json({ msg: 'success', dispatcher });
+  } else {
+    res.json({ msg: 'error', error: "dispatcher doesn't exist" });
+  }
+}
+
+module.exports = { entries, update, retrieveDispatcher };

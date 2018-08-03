@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const createId = require('./createId');
-const { entries, update } = require('./dispatcher');
+const { entries, update, retrieveDispatcher } = require('./dispatcher');
 
 const PORT = 3001;
 
@@ -14,7 +14,9 @@ app.get('/id', createId);
 
 app.get('/entries', entries);
 
-app.get('/update', update);
+app.post('/update', update);
+
+app.post('/info', retrieveDispatcher);
 
 app.listen(PORT, () =>
   console.log(`WebRTC signaling server listening on port ${PORT}!`),
