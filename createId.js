@@ -4,6 +4,7 @@ function createId(req, res) {
   const id = uid();
   db.set(id, schema);
   res.json({
+    msg: 'successfully created rtc id',
     rtcId: id,
     dispatcher: schema,
   });
