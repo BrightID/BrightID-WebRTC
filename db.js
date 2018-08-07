@@ -4,7 +4,7 @@ const db = new Map();
 
 const uid = () => nanoid();
 
-const schema = {
+const schema = () => ({
   ALPHA: {
     ICE_CANDIDATE: '',
     OFFER: '',
@@ -13,7 +13,7 @@ const schema = {
     ICE_CANDIDATE: '',
     ANSWER: '',
   },
-};
+});
 
 const ALPHA = 'ALPHA';
 const ZETA = 'ZETA';

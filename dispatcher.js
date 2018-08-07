@@ -15,6 +15,7 @@ const update = (socket) => (req, res) => {
   const { rtcId, person, type, value } = req.body;
   // retrieve dispatcher form db
   const dispatcher = db.get(rtcId);
+
   // verify person
   const verifyPerson = person === ALPHA || person === ZETA;
   // verify type
@@ -23,6 +24,8 @@ const update = (socket) => (req, res) => {
   // update db and send response
   if (dispatcher && verifyPerson && verifyType) {
     dispatcher[person][type] = value;
+    // send dispatcher to everyone subscribed to the io room
+    socket.to(rtcId).emit('update', dispatcher);
     res.json({
       msg: 'updated dispatcher successfully',
       dispatcher,
@@ -33,9 +36,6 @@ const update = (socket) => (req, res) => {
       error: 'wrong person or type - cannot update dispatcher',
     });
   }
-  // send dispatcher to everyone subscribed to the io room
-  socket.to(rtcId).emit('update', dispatcher);
-  console.log(dispatcher);
 };
 
 const retrieveDispatcher = (socket) => (req, res) => {
