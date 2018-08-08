@@ -24,7 +24,7 @@ const update = (socket) => (req, res) => {
   // update db and send response
   if (dispatcher && verifyPerson && verifyType) {
     dispatcher[person][type] = value;
-    // send dispatcher to everyone subscribed to the io room
+    // send dispatcher ONLY to who is subscribed to the room
     socket.to(rtcId).emit('update', dispatcher);
     res.json({
       msg: 'updated dispatcher successfully',
