@@ -46,6 +46,7 @@ const retrieveDispatcher = (socket) => (req, res) => {
   } else {
     res.json({ msg: 'error', error: "dispatcher doesn't exist" });
   }
+  console.log(`fetching ${rtcId}`);
 };
 
 function entries(req, res) {
