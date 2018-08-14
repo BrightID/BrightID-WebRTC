@@ -4,7 +4,7 @@ const {
   types: { ICE_CANDIDATE, ANSWER, OFFER },
 } = require('./db');
 
-const update = (socket) => (req, res) => {
+const updateArbiter = (socket) => (req, res) => {
   /**
    * client sends
    * @param rtcId = db value and io room
@@ -13,8 +13,8 @@ const update = (socket) => (req, res) => {
    * @param value = db value
    */
   const { rtcId, person, type, value } = req.body;
-  // retrieve dispatcher form db
-  const dispatcher = db.get(rtcId);
+  // retrieve arbiter form db
+  const arbiter = db.get(rtcId);
 
   // verify person
   const verifyPerson = person === ALPHA || person === ZETA;
@@ -22,31 +22,30 @@ const update = (socket) => (req, res) => {
   const verifyType =
     type === ICE_CANDIDATE || type === ANSWER || type === OFFER;
   // update db and send response
-  if (dispatcher && verifyPerson && verifyType) {
-    dispatcher[person][type] = value;
-    // send dispatcher ONLY to who is subscribed to the room
-    socket.to(rtcId).emit('update', dispatcher);
+  if (arbiter && verifyPerson && verifyType) {
+    arbiter[person][type] = value;
+    // send arbiter ONLY to who is subscribed to the room
+    socket.to(rtcId).emit('update', arbiter);
     res.json({
-      msg: 'updated dispatcher successfully',
-      dispatcher,
+      msg: 'updated arbiter successfully',
+      arbiter,
     });
   } else {
     res.json({
       msg: 'error',
-      error: 'wrong person or type - cannot update dispatcher',
+      error: 'wrong person or type - cannot update arbiter',
     });
   }
 };
 
-const retrieveDispatcher = (socket) => (req, res) => {
+const retrieveArbiter = (req, res) => {
   const { rtcId } = req.body;
-  const dispatcher = db.get(rtcId);
-  if (dispatcher) {
-    res.json({ msg: 'success', dispatcher });
+  const arbiter = db.get(rtcId);
+  if (arbiter) {
+    res.json({ msg: 'success', arbiter });
   } else {
-    res.json({ msg: 'error', error: "dispatcher doesn't exist" });
+    res.json({ msg: 'error', error: "arbiter doesn't exist" });
   }
-  console.log(`fetching ${rtcId}`);
 };
 
 function entries(req, res) {
@@ -61,4 +60,4 @@ function entries(req, res) {
   console.log(dbEntries);
 }
 
-module.exports = { entries, update, retrieveDispatcher };
+module.exports = { entries, updateArbiter, retrieveArbiter };

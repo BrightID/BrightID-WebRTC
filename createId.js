@@ -6,8 +6,9 @@ function createId(req, res) {
   res.json({
     msg: 'successfully created rtc id',
     rtcId: id,
-    dispatcher: db.get(id),
+    arbiter: db.get(id),
   });
+  console.log(`successfully created rtc id ${id}`);
 }
 
 module.exports = createId;

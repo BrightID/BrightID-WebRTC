@@ -1,7 +1,7 @@
 function signal(socket) {
   console.log(`created new websocket ${socket.id}`);
   socket.emit('a message', {
-    what: 'huh',
+    test: 'huh what',
   });
 
   socket.on('join', (rtcId) => {
