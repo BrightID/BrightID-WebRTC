@@ -1,7 +1,7 @@
 const {
   db,
   persons: { ALPHA, ZETA },
-  types: { ICE_CANDIDATE, ANSWER, OFFER },
+  types: { ICE_CANDIDATE, ANSWER, OFFER, PUBLIC_KEY },
 } = require('./db');
 
 const updateArbiter = (socket) => (req, res) => {
@@ -10,9 +10,9 @@ const updateArbiter = (socket) => (req, res) => {
    * @param rtcId = db value and io room
    * @param person = db value
    * @param type = db value
-   * @param value = db value
+   * @param box = db value
    */
-  const { rtcId, person, type, value } = req.body;
+  const { rtcId, person, type, box } = req.body;
   // retrieve arbiter form db
   const arbiter = db.get(rtcId);
 
@@ -20,10 +20,13 @@ const updateArbiter = (socket) => (req, res) => {
   const verifyPerson = person === ALPHA || person === ZETA;
   // verify type
   const verifyType =
-    type === ICE_CANDIDATE || type === ANSWER || type === OFFER;
+    type === ICE_CANDIDATE ||
+    type === ANSWER ||
+    type === OFFER ||
+    type === PUBLIC_KEY;
   // update db and send response
   if (arbiter && verifyPerson && verifyType) {
-    arbiter[person][type] = value;
+    arbiter[person][type] = box;
     // send arbiter ONLY to who is subscribed to the room
     socket.to(rtcId).emit('update', arbiter);
     res.json({
@@ -36,6 +39,7 @@ const updateArbiter = (socket) => (req, res) => {
       error: 'wrong person or type - cannot update arbiter',
     });
   }
+  // console.log(`updated ${type} with ${box}`);
 };
 
 const retrieveArbiter = (req, res) => {
@@ -57,7 +61,7 @@ function entries(req, res) {
     entries: dbEntries,
     db: db,
   });
-  console.log(dbEntries);
+  // console.log(dbEntries);
 }
 
 module.exports = { entries, updateArbiter, retrieveArbiter };

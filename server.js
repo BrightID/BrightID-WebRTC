@@ -24,5 +24,5 @@ app.post('/update', updateArbiter(socket));
 app.post('/dispatcher', retrieveArbiter);
 
 server.listen(PORT, () => {
-  console.log(`WebRTC signaling server listening on port ${PORT}!`);
+  console.log(`WebRTC signaling server started!`);
 });
