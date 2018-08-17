@@ -52,16 +52,16 @@ const retrieveArbiter = (req, res) => {
   }
 };
 
-function entries(req, res) {
-  const dbEntries = [];
-  for (let i of db.keys()) {
-    dbEntries.push(i);
-  }
-  res.json({
-    entries: dbEntries,
-    db: db,
-  });
-  // console.log(dbEntries);
-}
+// function entries(req, res) {
+//   const dbEntries = [];
+//   for (let i of db.keys()) {
+//     dbEntries.push(i);
+//   }
+//   res.json({
+//     entries: dbEntries,
+//     db: db,
+//   });
+//   // console.log(dbEntries);
+// }
 
-module.exports = { entries, updateArbiter, retrieveArbiter };
+module.exports = { updateArbiter, retrieveArbiter };
