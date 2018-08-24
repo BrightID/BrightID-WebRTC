@@ -5,7 +5,11 @@ const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const createId = require('./createId');
-const { updateArbiter, retrieveArbiter } = require('./arbiterApi');
+const {
+  updateArbiter,
+  retrieveArbiter,
+  exchangeAvatar,
+} = require('./arbiterApi');
 const signal = require('./signal');
 
 const PORT = 3001;
@@ -20,6 +24,8 @@ app.get('/id', createId);
 app.post('/update', updateArbiter(socket));
 
 app.post('/dispatcher', retrieveArbiter);
+
+app.post('/avatar', exchangeAvatar(socket));
 
 server.listen(PORT, () => {
   console.log(`WebRTC signaling server started!`);

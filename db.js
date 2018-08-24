@@ -7,12 +7,12 @@ const uid = () => nanoid();
 const schema = () => ({
   ALPHA: {
     PUBLIC_KEY: '',
-    ICE_CANDIDATE: '',
+    ICE_CANDIDATE: [],
     OFFER: '',
   },
   ZETA: {
     PUBLIC_KEY: '',
-    ICE_CANDIDATE: '',
+    ICE_CANDIDATE: [],
     ANSWER: '',
   },
 });
@@ -22,7 +22,6 @@ const ZETA = 'ZETA';
 const ICE_CANDIDATE = 'ICE_CANDIDATE';
 const OFFER = 'OFFER';
 const ANSWER = 'ANSWER';
-const PUBLIC_KEY = 'PUBLIC_KEY';
 
 const persons = {
   ALPHA,
@@ -33,7 +32,6 @@ const types = {
   ICE_CANDIDATE,
   OFFER,
   ANSWER,
-  PUBLIC_KEY,
 };
 
 module.exports = {
