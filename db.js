@@ -5,27 +5,27 @@ const db = new Map();
 const uid = () => nanoid();
 
 const schema = () => ({
-  ALPHA: {
+  USERA: {
     PUBLIC_KEY: '',
     ICE_CANDIDATE: [],
     OFFER: '',
   },
-  ZETA: {
+  USERB: {
     PUBLIC_KEY: '',
     ICE_CANDIDATE: [],
     ANSWER: '',
   },
 });
 
-const ALPHA = 'ALPHA';
-const ZETA = 'ZETA';
+const USERA = 'USERA';
+const USERB = 'USERB';
 const ICE_CANDIDATE = 'ICE_CANDIDATE';
 const OFFER = 'OFFER';
 const ANSWER = 'ANSWER';
 
 const persons = {
-  ALPHA,
-  ZETA,
+  USERA,
+  USERB,
 };
 
 const types = {

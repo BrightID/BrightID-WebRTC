@@ -1,6 +1,6 @@
 const {
   db,
-  persons: { ALPHA, ZETA },
+  persons: { USERA, USERB },
   types: { ICE_CANDIDATE, ANSWER, OFFER },
 } = require('./db');
 
@@ -16,7 +16,7 @@ const updateArbiter = (socket) => (req, res) => {
   // retrieve arbiter form db
   const arbiter = db.get(rtcId);
   // verify person
-  const verifyPerson = person === ALPHA || person === ZETA;
+  const verifyPerson = person === USERA || person === USERB;
   // verify type
 
   const answerOffer = type === ANSWER || type === OFFER;
@@ -43,7 +43,7 @@ const updateArbiter = (socket) => (req, res) => {
       error: 'wrong person or type - cannot update arbiter',
     });
   }
-  console.log(`updated ${type} with ${box}`);
+  // console.log(`updated ${type} with ${box}`);
 };
 
 const retrieveArbiter = (req, res) => {
