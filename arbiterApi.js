@@ -56,14 +56,4 @@ const retrieveArbiter = (req, res) => {
   }
 };
 
-const exchangeAvatar = (socket) => (req, res) => {
-  const { rtcId, avatar, person } = req.body;
-  console.log(`avatar: ${avatar}`);
-  socket.to(rtcId).emit('avatar', { person, avatar });
-  res.json({
-    msg: 'avatar recieved',
-  });
-  console.log(`avatar: ${avatar}`);
-};
-
-module.exports = { updateArbiter, retrieveArbiter, exchangeAvatar };
+module.exports = { updateArbiter, retrieveArbiter };

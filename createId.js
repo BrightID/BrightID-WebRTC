@@ -8,7 +8,7 @@ function createId(req, res) {
     rtcId: id,
     arbiter: db.get(id),
   });
-  // console.log(`successfully created rtc id ${id}`);
+  console.log(`successfully created rtc id ${id}`);
 }
 
 module.exports = createId;
